@@ -289,6 +289,7 @@ public class PalantiriPresenter
                 for (BeingThread t : mBeingsThreads)
                     try {
                         t.join();
+                        mView.get().done();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
