@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment1/A1-Android-App/A1-Android-App.iml" filepath="$PROJECT_DIR$/assignments/assignment1/A1-Android-App/A1-Android-App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment1/A1-Android-App/A1-Android-App1.iml" filepath="$PROJECT_DIR$/assignments/assignment1/A1-Android-App/A1-Android-App1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment1/A1-Android-Test/A1-Android-Test.iml" filepath="$PROJECT_DIR$/assignments/assignment1/A1-Android-Test/A1-Android-Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment1/A1-Android-Test/A1-Android-Test1.iml" filepath="$PROJECT_DIR$/assignments/assignment1/A1-Android-Test/A1-Android-Test1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment1/A1-Java-Test/A1-Java-Test.iml" filepath="$PROJECT_DIR$/assignments/assignment1/A1-Java-Test/A1-Java-Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment1/A1-Java-Test/A1-Java-Test1.iml" filepath="$PROJECT_DIR$/assignments/assignment1/A1-Java-Test/A1-Java-Test1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment2/A2-Android-App/A2-Android-App.iml" filepath="$PROJECT_DIR$/assignments/assignment2/A2-Android-App/A2-Android-App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment2/A2-Android-Test/A2-Android-Test.iml" filepath="$PROJECT_DIR$/assignments/assignment2/A2-Android-Test/A2-Android-Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment2/A2-Java-Test/A2-Java-Test.iml" filepath="$PROJECT_DIR$/assignments/assignment2/A2-Java-Test/A2-Java-Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ex/AcronymExpander/AcronymExpander.iml" filepath="$PROJECT_DIR$/ex/AcronymExpander/AcronymExpander.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ex/AcronymExpanderNR/AcronymExpanderNR.iml" filepath="$PROJECT_DIR$/ex/AcronymExpanderNR/AcronymExpanderNR.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ex/ParcelableCommand/ParcelableCommand.iml" filepath="$PROJECT_DIR$/ex/ParcelableCommand/ParcelableCommand.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ex/PingPong/PingPong.iml" filepath="$PROJECT_DIR$/ex/PingPong/PingPong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/assignments/assignment3/assignment3.iml" filepath="$PROJECT_DIR$/assignments/assignment3/assignment3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ex/PingPong/console/console.iml" filepath="$PROJECT_DIR$/ex/PingPong/console/console.iml" />
+    </modules>
+  </component>
+</project>

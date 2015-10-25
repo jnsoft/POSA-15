@@ -269,8 +269,10 @@ public class PalantiriPresenter
         mBeingsThreads = new ArrayList<>();
         for (int i=0; i<beingCount; i++)
             mBeingsThreads.add(new BeingThread(new BeingRunnable(i, this), beingCount, this));
-        for (BeingThread t : mBeingsThreads)
+        for (BeingThread t : mBeingsThreads) {
             t.start();
+            Log.i(TAG, t.getName() + " started");
+        }
 
     }
 
@@ -286,14 +288,16 @@ public class PalantiriPresenter
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                for (BeingThread t : mBeingsThreads)
+                for (BeingThread t : mBeingsThreads) {
                     try {
                         t.join();
-                        mView.get().done();
+                        Log.i(TAG, "Joining " + t.getName());
                     } catch (InterruptedException e) {
+                        Log.d(TAG, "Waiting thread interrupted");
                         e.printStackTrace();
                     }
-
+                }
+                mView.get().done();
             }
         };
         Thread t = new Thread(r);
