@@ -49,8 +49,7 @@ public class PalantiriPresenter
        extends GenericPresenter<MVP.RequiredPresenterOps,
                                 MVP.ProvidedModelOps,
                                 PalantiriModel>
-       implements MVP.ProvidedPresenterOps, 
-                  MVP.RequiredPresenterOps {
+       implements MVP.ProvidedPresenterOps, MVP.RequiredPresenterOps {
     /**
      * Used for Android debugging.
      */
@@ -105,8 +104,7 @@ public class PalantiriPresenter
      * A ThreadFactory object that spawns an appropriately named
      * Thread for each Being.
      */
-    private ThreadFactory mThreadFactory =
-        new ThreadFactory() {
+    private ThreadFactory mThreadFactory =  new ThreadFactory() {
             /**
              * Give each Being a uniquely numbered name.
              */
@@ -118,8 +116,10 @@ public class PalantiriPresenter
              */
             public Thread newThread(Runnable runnable) {
                 // Create a new BeingThread whose name uniquely identifies each Being.
-                // TODO -- (done?) you fill in here by replacing "return null" with the appropriate code.
-                return new BeingThread(runnable,mBeingCount.intValue(), PalantiriPresenter.this);
+                // TODO -- (done) you fill in here by replacing "return null" with the appropriate code.
+                BeingThread t = new BeingThread(runnable, mBeingCount.getAndIncrement(), PalantiriPresenter.this);
+                return t;
+                //return new BeingThread(runnable,mBeingCount.intValue(), PalantiriPresenter.this);
                 // return null;
             }
         };
@@ -128,8 +128,7 @@ public class PalantiriPresenter
      * Default constructor that's needed by the GenericActivity
      * framework.
      */
-    public PalantiriPresenter() {
-    }
+    public PalantiriPresenter() { }
 
     /**
      * Hook method called when a new instance of PalantiriPresenter is
@@ -149,8 +148,7 @@ public class PalantiriPresenter
         // Invoke the special onCreate() method in GenericPresenter,
         // passing in the PalantiriModel class to instantiate/manage
         // and "this" to provide this MVP.RequiredModelOps instance.
-        super.onCreate(PalantiriModel.class,
-                       this);
+        super.onCreate(PalantiriModel.class, this);
 
         // Get the intent used to start the Activity.
         final Intent intent = view.getIntent();
@@ -176,12 +174,10 @@ public class PalantiriPresenter
      */
     @Override
     public void onConfigurationChange(MVP.RequiredViewOps view) {
-        Log.d(TAG,
-              "onConfigurationChange() called");
+        Log.d(TAG, "onConfigurationChange() called");
 
         // Reset the WeakReference.
-        mView =
-            new WeakReference<>(view);
+        mView = new WeakReference<>(view);
 
         // A runtime configuration change occurred.
         mConfigurationChangeOccurred = true;
@@ -262,8 +258,7 @@ public class PalantiriPresenter
     @Override
     public void shutdown() {
         synchronized(this) {
-            // Inform the user that we're shutting down the
-            // simulation.
+            // Inform the user that we're shutting down the simulation.
             mView.get().shutdownOccurred(mBeingsTasks.size());
 
             // Cancel all the BeingTasks.
@@ -288,8 +283,7 @@ public class PalantiriPresenter
         // Initialize the Palantiri.
         getModel().makePalantiri(Options.instance().numberOfPalantiri());
 
-        // Initialize the count of the number of threads Beings use to
-        // gaze.
+        // Initialize the count of the number of threads Beings use to gaze.
         mGazingTasks = new AtomicLong(0);
 
         // Show the Beings on the UI.
@@ -298,8 +292,7 @@ public class PalantiriPresenter
         // Show the palantiri on the UI.
         mView.get().showPalantiri();
 
-        // Spawn a thread that waits for all the Being threads to
-        // finish.
+        // Spawn a thread that waits for all the Being threads to finish.
         joinBeingsTasks();
 
         // Create and execute an AsyncBeingTask for each Being.
@@ -313,8 +306,7 @@ public class PalantiriPresenter
         // First, initialize mExitBarrier that's used as an exit
         // barrier to ensure the waiter thread doesn't finish until
         // all the BeingTasks finish.
-        mExitBarrier =
-            new CountDownLatch(Options.instance().numberOfBeings());
+        mExitBarrier = new CountDownLatch(Options.instance().numberOfBeings());
 
         // Create/start a waiter thread that uses mExitBarrier to wait
         // for all the BeingTasks to finish.  After they are all

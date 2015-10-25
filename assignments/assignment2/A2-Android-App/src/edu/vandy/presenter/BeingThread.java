@@ -4,13 +4,11 @@ package edu.vandy.presenter;
  * This class implements a BeingThread, which provides various methods
  * for interrupting and shutting down a Java Thread.
  */
-public class BeingThread 
-       extends Thread {
+public class BeingThread extends Thread {
     /**
      * Used for Android debugging.
      */
-    private final static String TAG = 
-        BeingThread.class.getName();
+    private final static String TAG = BeingThread.class.getName();
 
     /**
      * Used to stop the BeingThread from gazing when the lease
@@ -32,13 +30,9 @@ public class BeingThread
     /**
      * Constructor initializes the BeingThread.
      */
-    public BeingThread(Runnable runnable,
-                       int beingCount,
-                       PalantiriPresenter presenter) {
+    public BeingThread(Runnable runnable,int beingCount,PalantiriPresenter presenter) {
         // Initialize superclass and fields.
-        super(runnable,
-              "Being-" 
-              + beingCount);
+        super(runnable,"Being-" + beingCount);
         mLeaseExpired = false;
         mShutdown = false;
         mPresenter = presenter;
