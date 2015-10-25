@@ -27,7 +27,7 @@ public class PalantiriManager {
      * A map that associates the @a Palantiri key to the @a boolean
      * values that keep track of whether the key is available.
      */
-    protected HashMap<Palantir, Boolean> mPalantiriMap;
+    protected final HashMap<Palantir, Boolean> mPalantiriMap;
 
     /**
      * Constructor creates a PalantiriManager for the List of @a
@@ -60,13 +60,15 @@ public class PalantiriManager {
         // available and then return that palantir to the client.
         // TODO -- you fill in here.
         mAvailablePalantiri.acquireUninterruptibly();
-        for (Palantir p : mPalantiriMap.keySet()){
-            if(mPalantiriMap.get(p)) {
-                mPalantiriMap.put(p, false);
-                return p;
+        synchronized (mPalantiriMap) {
+            for (Palantir p : mPalantiriMap.keySet()) {
+                if (mPalantiriMap.get(p)) {
+                    mPalantiriMap.put(p, false);
+                    return p;
+                }
             }
         }
-        return null; 
+        return null;
     }
 
     /**
@@ -78,16 +80,10 @@ public class PalantiriManager {
         // in a thread-safe manner and release the Semaphore if all
         // works properly.
         // TODO -- you fill in here.
-        try {
-            synchronized (this) {
-                mPalantiriMap.put(palantir, true);
-            }
-            mAvailablePalantiri.release();
+        synchronized (mPalantiriMap){
+            mPalantiriMap.put(palantir, true);
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
+         mAvailablePalantiri.release();
     }
 
 
