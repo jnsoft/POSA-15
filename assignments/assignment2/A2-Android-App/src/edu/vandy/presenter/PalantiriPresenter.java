@@ -54,8 +54,7 @@ public class PalantiriPresenter
     /**
      * Used for Android debugging.
      */
-    private final static String TAG = 
-        PalantiriPresenter.class.getName();
+    private final static String TAG = PalantiriPresenter.class.getName();
 
     /**
      * Keeps track of whether a runtime configuration change ever
@@ -89,15 +88,13 @@ public class PalantiriPresenter
      * This List keeps track of how many palantiri we have and whether
      * they're in use or not.
      */
-    private List<DotColor> mPalantiriColors =
-        new ArrayList<>();
+    private List<DotColor> mPalantiriColors = new ArrayList<>();
 	
     /**
      * This List keeps track of how many beings we have and whether
      * they're gazing or not.
      */
-    private List<DotColor> mBeingsColors =
-        new ArrayList<>();
+    private List<DotColor> mBeingsColors = new ArrayList<>();
 
     /**
      * A CountDownLatch that ensures all Threads exit as a group.
@@ -120,11 +117,10 @@ public class PalantiriPresenter
              * Construct a new Thread.
              */
             public Thread newThread(Runnable runnable) {
-                // Create a new BeingThread whose name uniquely
-                // identifies each Being.
-                // TODO -- you fill in here by replacing "return null"
-                // with the appropriate code.
-                return null;
+                // Create a new BeingThread whose name uniquely identifies each Being.
+                // TODO -- (done?) you fill in here by replacing "return null" with the appropriate code.
+                return new BeingThread(runnable,mBeingCount.intValue(), PalantiriPresenter.this);
+                // return null;
             }
         };
 
@@ -360,7 +356,15 @@ public class PalantiriPresenter
         // of Beings, (2) a LinkedBlockingQueue, and (3) the
         // ThreadFactory instance.  Finally, iterate through all the
         // BeingTasks and execute them on the threadPoolExecutor.
-        // TODO - You fill in here.
+        // TODO - (done?) You fill in here.
+        mBeingsTasks = new ArrayList<BeingAsyncTask>(beingCount);
+        for (int i=0; i<beingCount; i++)
+            mBeingsTasks.add(new BeingAsyncTask(i, mExitBarrier));
+
+        ThreadPoolExecutor tpe = new ThreadPoolExecutor(beingCount,beingCount,1000,TimeUnit.DAYS, new LinkedBlockingQueue(), mThreadFactory);
+
+        for(BeingAsyncTask b : mBeingsTasks)
+            b.executeOnExecutor(tpe);
     }
 
     /**
