@@ -60,6 +60,7 @@ public class PalantiriManager {
         // and then return that palantir to the client.  There should
         // be *no* synchronized statements in this method.
         // TODO -- (done) you fill in here.
+
         mAvailablePalantiri.acquireUninterruptibly();
         for(Palantir p : mPalantiriMap.keySet())
             if(mPalantiriMap.get(p)) {

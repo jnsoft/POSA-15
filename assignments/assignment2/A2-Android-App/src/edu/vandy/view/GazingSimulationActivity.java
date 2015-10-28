@@ -6,9 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+
 import edu.vandy.MVP;
 import edu.vandy.R;
 import edu.vandy.common.GenericActivity;
@@ -108,8 +107,7 @@ public class GazingSimulationActivity
         // passing in the PalantiriPresenter class to
         // instantiate/manage and "this" to provide PalantiriPresenter
         // with this MVP.RequiredViewOps instance.
-        super.onCreate(PalantiriPresenter.class,
-                       this);
+        super.onCreate(PalantiriPresenter.class,this);
 
         // Initialize the Views.
         initializeViews();
@@ -126,12 +124,9 @@ public class GazingSimulationActivity
      */
     private void initializeViews() {
         // Initialize various Views and buttons.
-        mPalantirListView =
-            (ListView) findViewById(R.id.list_view_palantiri);
-        mBeingListView =
-            (ListView) findViewById(R.id.list_view_beings);
-        mSimulationButton =
-            (Button) findViewById(R.id.button_simulation);
+        mPalantirListView = (ListView) findViewById(R.id.list_view_palantiri);
+        mBeingListView = (ListView) findViewById(R.id.list_view_beings);
+        mSimulationButton = (Button) findViewById(R.id.button_simulation);
 
         // These adapters convert the colors of the Palantiri and
         // Beings into UI elements.

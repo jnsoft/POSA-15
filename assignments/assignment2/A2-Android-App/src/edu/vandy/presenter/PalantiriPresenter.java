@@ -108,8 +108,7 @@ public class PalantiriPresenter
             /**
              * Give each Being a uniquely numbered name.
              */
-            private final AtomicInteger mBeingCount =
-                new AtomicInteger(1);
+            private final AtomicInteger mBeingCount = new AtomicInteger(1);
 
             /**
              * Construct a new Thread.
@@ -117,10 +116,9 @@ public class PalantiriPresenter
             public Thread newThread(Runnable runnable) {
                 // Create a new BeingThread whose name uniquely identifies each Being.
                 // TODO -- (done) you fill in here by replacing "return null" with the appropriate code.
-                BeingThread t = new BeingThread(runnable, mBeingCount.getAndIncrement(), PalantiriPresenter.this);
-                return t;
-                //return new BeingThread(runnable,mBeingCount.intValue(), PalantiriPresenter.this);
-                // return null;
+                    BeingThread t = new BeingThread(runnable, mBeingCount.getAndIncrement(), PalantiriPresenter.this);
+                    // Log.i(TAG, "Thread " + (mBeingCount.intValue() - 2) + " created!");
+                    return t;
             }
         };
 
@@ -296,7 +294,9 @@ public class PalantiriPresenter
         joinBeingsTasks();
 
         // Create and execute an AsyncBeingTask for each Being.
+        Log.i(TAG, "Before createAndExecuteBeingsTasks");
         createAndExecuteBeingsTasks(Options.instance().numberOfBeings());
+        Log.i(TAG, "After createAndExecuteBeingsTasks");
     }
 
     /**
@@ -348,15 +348,20 @@ public class PalantiriPresenter
         // of Beings, (2) a LinkedBlockingQueue, and (3) the
         // ThreadFactory instance.  Finally, iterate through all the
         // BeingTasks and execute them on the threadPoolExecutor.
-        // TODO - (done?) You fill in here.
+        // TODO - (done) You fill in here.
         mBeingsTasks = new ArrayList<BeingAsyncTask>(beingCount);
-        for (int i=0; i<beingCount; i++)
+        for (int i=0; i<beingCount; i++){
             mBeingsTasks.add(new BeingAsyncTask(i, mExitBarrier));
+        }
 
-        ThreadPoolExecutor tpe = new ThreadPoolExecutor(beingCount,beingCount,1000,TimeUnit.DAYS, new LinkedBlockingQueue(), mThreadFactory);
+       ThreadPoolExecutor tpe = new ThreadPoolExecutor(beingCount,beingCount,0,TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), mThreadFactory);
 
-        for(BeingAsyncTask b : mBeingsTasks)
-            b.executeOnExecutor(tpe);
+        int c = 0;
+        for(BeingAsyncTask b : mBeingsTasks){
+            Log.i(TAG, "Executing task " + c++ + " on ThreadPoolExecutor");
+            b.executeOnExecutor(tpe,PalantiriPresenter.this);
+        }
+
     }
 
     /**
