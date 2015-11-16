@@ -1,10 +1,5 @@
 package vandy.mooc.view;
 
-import vandy.mooc.MVP;
-import vandy.mooc.R;
-import vandy.mooc.common.GenericActivity;
-import vandy.mooc.common.Utils;
-import vandy.mooc.presenter.ImagePresenter;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +12,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import vandy.mooc.MVP;
+import vandy.mooc.R;
+import vandy.mooc.common.GenericActivity;
+import vandy.mooc.common.Utils;
+import vandy.mooc.presenter.ImagePresenter;
 
 /**
  * This Activity prompts the user for URLs of images to download
@@ -79,7 +80,7 @@ public class DownloadImagesActivity
         // and "this" to provide ImagePresenter with the
         // MVP.RequiredViewOps instance.
         super.onCreate(ImagePresenter.class,
-                       this);
+                this);
     }
 
     /**
@@ -131,9 +132,7 @@ public class DownloadImagesActivity
      */
     public void addUrl(View view) {
         // Get the user input (if any).
-        final String url =
-            mUrlEditText.getText().toString();
-
+        final String url = mUrlEditText.getText().toString();
         // Do sanity check for syntactic validity of the URL.
         if (URLUtil.isValidUrl(url)) {
             // Add valid URL to running list for download.
@@ -141,10 +140,12 @@ public class DownloadImagesActivity
 
             // (Re)display all the URLs.
             displayUrls();
-    	} else 
-            Utils.showToast(this,
-                            "Invalid URL "
-                            + url);
+        }
+        else
+            // DEBUG
+            getPresenter().getUrlList().add(Uri.parse("http://www.w3schools.com/html/pic_mountain.jpg"));
+            displayUrls();
+            Utils.showToast(this, "Invalid URL " + url);
     }
 
     /**

@@ -1,14 +1,14 @@
 package vandy.mooc.common;
 
+import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-
-import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
 
 /**
  * This helper class encapsulates various static methods that are used
@@ -116,9 +116,7 @@ public class DownloadUtils {
                          directoryPathname);
                 }
             } catch (Exception e) {
-                Log.e(TAG,
-                      "Exception while downloading -- returning null."
-                      + e.toString());
+                Log.e(TAG,"Exception while downloading -- returning null." + e.toString());
                 return null;
             }
     }

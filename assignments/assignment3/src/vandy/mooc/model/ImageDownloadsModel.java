@@ -1,10 +1,13 @@
 package vandy.mooc.model;
 
+import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
+
 import java.lang.ref.WeakReference;
 
 import vandy.mooc.MVP;
-import android.content.Context;
-import android.net.Uri;
+import vandy.mooc.common.DownloadUtils;
 
 /**
  * This class plays the "Model" role in the Model-View-Presenter (MVP)
@@ -71,10 +74,11 @@ public class ImageDownloadsModel
      *        Absolute path to the downloaded image file on the file
      *        system.
      */
-    public Uri downloadImage(Context context,
-                             Uri url,
-                             Uri directoryPathname) {
-        // @@ TODO -- You fill in here, replacing "null" with the appropriate code.
-    	return null;
+    public Uri downloadImage(Context context,Uri url, Uri directoryPathname) {
+        // @@ TODO -- (done) You fill in here, replacing "null" with the appropriate code.
+        Log.d(TAG,"Downloading " + url + " to "  + directoryPathname);
+        Uri fname = DownloadUtils.downloadImage(context,url,directoryPathname);
+        Log.d(TAG,"Done downloading " + url + " to " + fname.toString());
+    	return fname;
     }
 }
