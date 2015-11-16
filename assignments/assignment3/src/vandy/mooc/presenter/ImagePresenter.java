@@ -1,5 +1,11 @@
 package vandy.mooc.presenter;
 
+import android.content.Context;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Log;
+
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -7,13 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import vandy.mooc.MVP;
+import vandy.mooc.common.BitmapUtils;
 import vandy.mooc.common.GenericPresenter;
 import vandy.mooc.common.Utils;
 import vandy.mooc.model.ImageDownloadsModel;
-import android.content.Context;
-import android.net.Uri;
-import android.os.Environment;
-import android.util.Log;
 
 /**
  * This class defines all the image-related operations.  It implements
@@ -78,8 +81,7 @@ public class ImagePresenter
         mView = new WeakReference<>(view);
 
         // Create a timestamp that will be unique.
-        final String timestamp =
-            new SimpleDateFormat("yyyyMMdd'_'HHmm").format(new Date());
+        final String timestamp = new SimpleDateFormat("yyyyMMdd'_'HHmm").format(new Date());
 
         // Use the timestamp to create a pathname for the
         // directory that stores downloaded images.
@@ -100,8 +102,7 @@ public class ImagePresenter
         // passing in the ImageDownloadsModel class to instantiate/manage and
         // "this" to provide ImageDownloadsModel with this MVP.RequiredModelOps
         // instance.
-        super.onCreate(ImageDownloadsModel.class,
-                       this);
+        super.onCreate(ImageDownloadsModel.class, this);
     }
 
     /**
@@ -177,8 +178,7 @@ public class ImagePresenter
     @Override
     public void startProcessing() {
         if (mUrlList.isEmpty())
-            Utils.showToast(mView.get().getActivityContext(),
-                            "no images provided");
+            Utils.showToast(mView.get().getActivityContext(), "no images provided");
         else {
             // Make the progress bar visible.
             mView.get().displayProgressBar();
@@ -197,6 +197,42 @@ public class ImagePresenter
             // executeOnExecutor().
 
             // TODO -- you fill in here.
+            ArrayList<AsyncTask> ImageTasks = new ArrayList<AsyncTask>(mUrlList.size());
+
+            for (Uri url : mUrlList){
+                ImageTasks.add(new AsyncTask<Uri, Void, Uri>() {
+                    @Override
+                    protected Uri doInBackground(Uri... urls) {
+                        Uri downloadedFile = getModel().downloadImage(mView.get().getActivityContext(), urls[0], mDirectoryPathname);
+                        return downloadedFile;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Uri uri) {
+                        AsyncTask<Uri, Void, Uri> filterTask = new AsyncTask<Uri, Void, Uri>() {
+                            @Override
+                            protected Uri doInBackground(Uri... urls) {
+                                Uri filteredFile = BitmapUtils.grayScaleFilter(mView.get().getActivityContext(), urls[0], mDirectoryPathname);
+                                return filteredFile;
+                            }
+
+                            @Override
+                            protected void onPostExecute(Uri uri) {
+                                onProcessingComplete(uri, mDirectoryPathname);
+                            }
+
+                        };
+                        filterTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, uri);
+
+                    }
+                });
+            }
+
+            for(int i=0; i< mUrlList.size(); i++){
+                ImageTasks.get(i).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mUrlList.get(i));
+            }
+
+
         }
     }
 
